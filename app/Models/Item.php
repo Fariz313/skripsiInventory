@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Item extends Model
 {
     use HasFactory;
+    public function category(){
+        return this->belongsTo(CategoryItem::class,'item_category_id','id');
+    }
+    public function unit(){
+        return this->belongsTo(Unit::class,'unit_id','id');
+    }
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateItemTable extends Migration
+class CreateItemCategoryTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,11 @@ class CreateItemTable extends Migration
      */
     public function up()
     {
-        Schema::create('items', function (Blueprint $table) {
+        Schema::create('item_categories', function (Blueprint $table) {
             $table->id();
-            $table->string('item_code')->unique();
-          
-            $table->string('item_name');
-            $table->foreignId('item_category_id')->nullable();
-            $table->foreignId('unit_id')->nullable();
-            $table->string('sku_number')->unique();
-           
+            $table->string('category_code');
+            $table->string('category_name');
+
             $table->timestamps();
         });
     }
@@ -33,6 +29,6 @@ class CreateItemTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('items');
+        Schema::dropIfExists('item_categories');
     }
 }
