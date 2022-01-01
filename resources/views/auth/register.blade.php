@@ -13,7 +13,30 @@
                 <x-jet-label for="name" value="{{ __('Name') }}" />
                 <x-jet-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
             </div>
-
+            <div class="mt-4">
+                <x-jet-label for="NIK" value="{{ __('NIK') }}" />
+                <x-jet-input id="nik" class="block mt-1 w-full" type="text" name="nik" :value="old('nik')" required autofocus autocomplete="nik" />
+            </div>
+            <div class="mt-4">
+                <x-jet-label for="address" value="{{ __('address') }}" />
+                <x-jet-input id="address" class="block mt-1 w-full" type="text" name="address" :value="old('address')" required autofocus autocomplete="address" />
+            </div>
+            <div class="mt-4">
+                <x-jet-label for="username" value="{{ __('username') }}" />
+                <x-jet-input id="username" class="block mt-1 w-full" type="text" name="username" :value="old('username')" required autofocus autocomplete="username" />
+            </div>
+            <div class="mt-4">
+                <x-jet-label for="gender" value="{{ __('gender') }}" />
+                <select class="form-control" id="exampleFormControlSelect1">
+                    <option value="male">laki-laki</option>
+                    <option value="female">perempuan</option>
+  
+    </select>
+            </div>
+            <div class="mt-4">
+                <x-jet-label for="phoneNumber" value="{{ __('phoneNumber') }}" />
+                <x-jet-input id="phoneNumber" class="block mt-1 w-full" type="text" name="phoneNumber" :value="old('phoneNumber')" required autofocus autocomplete="phoneNumber" />
+            </div>
             <div class="mt-4">
                 <x-jet-label for="email" value="{{ __('Email') }}" />
                 <x-jet-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />

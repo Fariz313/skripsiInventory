@@ -117,7 +117,8 @@
                             </svg>
 
                             <a href="/login" class="ml-1 underline cl" style="font-family: serif">
-                                akulaku duit enak
+                                pencet aku dong kak
+                                
                             
                             </a>
                         </div>
