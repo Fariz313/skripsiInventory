@@ -18,6 +18,9 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/',function(){
         return view('dashboard');
     });
+    Route::get('/dashboard',function(){
+        return view('dashboard');
+    });
     Route::get('/item','ItemController@index')->name('item.index');
     Route::post('/item','ItemController@create')->name('item.create');
     Route::post('/item/{id}','ItemController@update')->name('item.update');
