@@ -36,6 +36,12 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/unit/{id}','UnitController@detail')->name('unit.detail');
     Route::delete('/unit/{id}','UnitController@delete')->name('unit.delete');
 
+    Route::get('/customer','CustomerController@index')->name('customer.index');
+    Route::post('/customer','CustomerController@create')->name('customer.create');
+    Route::post('/customer/{id}','CustomerController@update')->name('customer.update');
+    Route::get('/customer/{id}','CustomerController@detail')->name('customer.detail');
+    Route::delete('/customer/{id}','CustomerController@delete')->name('customer.delete');
+
     Route::get('/fetch/unit','UnitController@fetch')->name('fetch.unit');
     Route::get('/fetch/category','ItemCategoryController@fetch')->name('fetch.category');
 });
