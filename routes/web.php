@@ -13,11 +13,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
-Route::get('/item','ItemController@index' );
+Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+    Route::get('/','ItemController@index');
+    Route::get('/dashboard','ItemController@index' );
+    
+    Route::get('/item','ItemController@index')->name('item.index');
+    Route::post('/item','ItemController@create')->name('item.create');
+    Route::post('/item/{id}','ItemController@update')->name('item.update');
+    Route::get('/item/{id}','ItemController@detail')->name('item.detail');
+
+    Route::get('/fetch/unit','UnitController@fetch')->name('fetch.unit');
+    Route::get('/fetch/category','ItemCategoryController@fetch')->name('fetch.category');
+});

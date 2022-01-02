@@ -27,11 +27,10 @@
             </div>
             <div class="mt-4">
                 <x-jet-label for="gender" value="{{ __('gender') }}" />
-                <select class="form-control" id="exampleFormControlSelect1">
+                <select class="form-control" name="gender" id="exampleFormControlSelect1">
                     <option value="male">laki-laki</option>
                     <option value="female">perempuan</option>
-  
-    </select>
+                </select>
             </div>
             <div class="mt-4">
                 <x-jet-label for="phoneNumber" value="{{ __('phoneNumber') }}" />
