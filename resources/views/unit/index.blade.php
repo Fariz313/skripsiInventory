@@ -5,7 +5,7 @@
       <div class="card mb-4">
         <div class="card-header row mx-0 px-3 pb-0">
           <div class="col-6  ps-0">
-            <h6>Daftar Barang</h6>
+            <h6>Daftar Unit</h6>
           </div>
           <div class="col-6 d-flex justify-content-end">
             <button class="btn btn-primary" onclick="showModal('add')">Tambah</button>
@@ -17,7 +17,8 @@
               <thead>
                 <tr>
                   <th class="text-uppercase text-secondary font-weight-bolder opacity-7">ID</th>
-                  <th class="text-uppercase text-secondary font-weight-bolder opacity-7 ps-2">Nama</th>
+                  <th class="text-uppercase text-secondary font-weight-bolder opacity-7 ps-2">Kode Unit</th>
+                  <th class="text-uppercase text-secondary font-weight-bolder opacity-7 ps-2">Nama Unit</th>
                   <th class="text-end text-uppercase text-secondary font-weight-bolder opacity-7"></th>
                 </tr>
               </thead>
@@ -40,12 +41,12 @@
         </div>
         <div class="modal-body ">
           <div class="mb-3">
-            <label class="form-label">Nomor SKU</label>
-            <input required id="sku_number" type="text" name="sku_number" class="form-control" aria-describedby="emailHelp">
+            <label class="form-label">Kode Unit</label>
+            <input required id="unit_code" type="text" name="unit_code" class="form-control" aria-describedby="emailHelp">
           </div>
             <div class="mb-3">
-              <label class="form-label">Kode Barang</label>
-              <input required id="item_code" type="text" name="item_code" class="form-control" aria-describedby="emailHelp">
+              <label class="form-label">Nama Unit</label>
+              <input required id="unit_name" type="text" name="unit_name" class="form-control" aria-describedby="emailHelp">
             </div>
         </div>
         <div class="modal-footer">
@@ -61,8 +62,8 @@
   const myModal = new bootstrap.Modal(document.getElementById('modal'))
   let base_url = window.location.origin
   getData()
-  fetchData()
   let submitType = 'add'
+  
   function submit() {
     let ajaxType = 'POST';
     let url = '';
@@ -73,21 +74,18 @@
     }
     request = {
       "_token": "{{ csrf_token() }}",
-      "item_code" : $('#item_code').val(),
-      "item_name" : $('#item_name').val(),
-      "item_category_id" : $('#item_category_id').val(),
-      "unit_id" : $('#unit_id').val(),
-      "sku_number" : $('#sku_number').val()
+      "unit_code" : $('#unit_code').val(),
+      "unit_name" : $('#unit_name').val()
     }
     if(ajaxType=="POST"){
-      $.post("{{route('item.index')}}",
+      $.post("{{route('unit.index')}}",
       request,
       function(data, status){
         myModal.hide()
         $('#itemTable').DataTable().ajax.reload()
       });
     }else{
-      $.post("{{route('item.index')}}/"+submitType,
+      $.post("{{route('unit.index')}}/"+submitType,
       request,
       function(data, status){
         myModal.hide()
@@ -102,12 +100,11 @@
       let table = $('#itemTable').DataTable({
           processing: true,
           serverSide: true,
-          ajax: "{{ route('item.index') }}",
+          ajax: "{{ route('unit.index') }}",
           columns: [
               {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-              {data: 'item_name', name: 'item_name'},
-              {data: 'category.category_name', name: 'category.category_name'},
-              {data: 'unit.unit_name', name: 'category.unit_name'},
+              {data: 'unit_name', name: 'unit_name'},
+              {data: 'unit_code', name: 'unit_code'},
               {
                   data: 'action', 
                   name: 'action', 
@@ -119,6 +116,7 @@
       });  
     });
   }
+
   function showModal(id){
     submitType = id
     if(id!=="add"){
@@ -128,54 +126,36 @@
         headers: {
             "Content-Type": "application/json"
         },
-        url: base_url+"/item/"+id,
+        url: "{{route('category.index')}}/"+id,
+        
         success: function (res) {
             const data = JSON.parse(res)
-            $('#item_code').val(data.item_code)
-            $('#item_name').val(data.item_name)
-            $('#item_category_id').val(data.item_category_id)
-            $('#unit_id').val(data.unit_id)
-            $('#sku_number').val(data.sku_number)
+            $('#unit_code').val(data.unit_code)
+            $('#unit_name').val(data.unit_name)
         }
       });
     }else{
       $('#modalLabel').text('Tambah')
-      $('#item_code').val('')
-      $('#item_name').val('')
-      $('#item_category_id').val('')
-      $('#unit_id').val('')
-      $('#sku_number').val('')
+      $('#unit_code').val('')
+      $('#unit_name').val('')
     }
     myModal.show()
   }
-  function fetchData() {
+
+  function deleteData(id) {
     $.ajax({
-      type: "GET",
-      headers: {
-          "Content-Type": "application/json"
-      },
-      url: '{{route("fetch.category")}}',
-      success: function (res) {
-        const data = JSON.parse(res)
-        data.forEach(element=>{
-          $('#item_category_id').append('<option value="'+element.id+'">'+element.category_name+'</option>')
-        })
-      }
-    });
-    $.ajax({
-      type: "GET",
-      headers: {
-          "Content-Type": "application/json"
-      },
-      url:'{{route("fetch.unit")}}',
-      success: function (res) {
-          const data = JSON.parse(res)
-          data.forEach(element => {
-            $('#unit_id').append('<option value="'+element.id+'">'+element.unit_name+'</option>')
-          });
-      }
+        url: '{{route("unit.index")}}/'+id,
+        type: 'DELETE',
+        data:{
+          'id': id,
+          '_token': '{{ csrf_token() }}'
+        },
+        success: function(result) {
+          $('#itemTable').DataTable().ajax.reload()
+        }
     });
   }
+
   $("form").submit(function(e){
       e.preventDefault();
       submit();

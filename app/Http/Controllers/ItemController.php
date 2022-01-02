@@ -58,4 +58,11 @@ class ItemController extends Controller
             'status'    =>  'Success',
         ]);
     }
+    public function delete($id)
+    {
+        Item::findOrFail($id)->delete();
+        return response()->json([
+            'status'    =>  'Success',
+        ]);
+    }
 }

@@ -15,13 +15,26 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
-    Route::get('/','ItemController@index');
-    Route::get('/dashboard','ItemController@index' );
-    
+    Route::get('/',function(){
+        return view('dashboard');
+    });
     Route::get('/item','ItemController@index')->name('item.index');
     Route::post('/item','ItemController@create')->name('item.create');
     Route::post('/item/{id}','ItemController@update')->name('item.update');
     Route::get('/item/{id}','ItemController@detail')->name('item.detail');
+    Route::delete('/item/{id}','ItemController@delete')->name('item.delete');
+
+    Route::get('/category','ItemCategoryController@index')->name('category.index');
+    Route::post('/category','ItemCategoryController@create')->name('category.create');
+    Route::post('/category/{id}','ItemCategoryController@update')->name('category.update');
+    Route::get('/category/{id}','ItemCategoryController@detail')->name('category.detail');
+    Route::delete('/category/{id}','ItemCategoryController@delete')->name('category.delete');
+
+    Route::get('/unit','UnitController@index')->name('unit.index');
+    Route::post('/unit','UnitController@create')->name('unit.create');
+    Route::post('/unit/{id}','UnitController@update')->name('unit.update');
+    Route::get('/unit/{id}','UnitController@detail')->name('unit.detail');
+    Route::delete('/unit/{id}','UnitController@delete')->name('unit.delete');
 
     Route::get('/fetch/unit','UnitController@fetch')->name('fetch.unit');
     Route::get('/fetch/category','ItemCategoryController@fetch')->name('fetch.category');
